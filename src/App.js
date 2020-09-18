@@ -12,6 +12,8 @@ import { connect } from "react-redux";
 import { setCurrentUser } from "./redux/user/user.actions";
 import { selectCurrentUser } from "./redux/user/user.selector";
 import { createStructuredSelector } from "reselect";
+// import { addCollectionAndDocuments } from "./firebase/firebase.utils";
+// import { selectShopItems } from "./redux/shop/shop.selector";
 class App extends React.Component {
   // constructor() {
   //   super();
@@ -21,11 +23,12 @@ class App extends React.Component {
   //   this.unsubscribeFromAuth = null;
   // }
   componentDidMount() {
+    const { setCurrentUser } = this.props;
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
         userRef.onSnapshot((snapshot) => {
-          this.props.setCurrentUser({
+          setCurrentUser({
             id: snapshot.id,
             ...snapshot.data(),
           });
@@ -37,8 +40,9 @@ class App extends React.Component {
           // });
         });
       } else {
-        this.props.setCurrentUser(userAuth);
+        setCurrentUser(userAuth);
       }
+      // addCollectionAndDocuments("collections", collectionsArray);
     });
   }
 
@@ -68,6 +72,7 @@ class App extends React.Component {
 }
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
+  // collectionsArray: selectShopItems,
 });
 const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
