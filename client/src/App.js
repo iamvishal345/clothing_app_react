@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "./App.css";
+import "./App.scss";
 
 //Router
 import { Switch, Route, Redirect } from "react-router-dom";
