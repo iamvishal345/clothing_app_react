@@ -12,7 +12,7 @@ const port = process.env.PORT || 5000;
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(enforce.HTTPS({ trustAzureHeader: true }));
+app.use(enforce.HTTPS({ trustProtoHeader: true }));
 app.use(cors());
 
 if (process.env.NODE_ENV === "production") {
